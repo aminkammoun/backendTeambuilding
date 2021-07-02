@@ -17,10 +17,10 @@ router.get("/:id", async (req, res) => {
       
       res.send(addBuild);
 });
-/* router.get("/owner/:id", async (req, res) => {
+ router.get("/owner/:id", async (req, res) => {
   const addBuild = await addBuilding.find({ idUserPoster: req.params.id });
   res.send(addBuild);
-}); */
+}); 
 
 var storage = multer.diskStorage({
     destination: "uploads",

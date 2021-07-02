@@ -100,18 +100,16 @@ router.get("/:id", (req, res) => {
     });
 });
 
-/* router.put("/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   const user = await User.findByIdAndUpdate(req.params.id, {
-    phone: req.body.phone,
-    carModel: req.body.carModel,
-    fumer: req.body.fumer,
-    climat : req.body.climat,
-    rating : req.body.rating,
+    name: req.body.name,
+    lastName: req.body.lastName,
+    
   });
 
   if (!user)
     return res.status(404).send("The genre with the given ID was not found.");
   res.send(user);
-}); */
+}); 
 
 module.exports = router;
