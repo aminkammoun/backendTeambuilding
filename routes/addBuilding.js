@@ -60,11 +60,13 @@ router.delete("/:id", async (req, res) => {
     
     res.send(addbuild);
   });
-/* router.get("/distination/:distination", async (req, res) => {
-  const distination = await Covoiturage.find({ arrive: req.params.distination });
-  if (!distination) return res.status(404).send("The distination not found.");
-  res.send(distination);
-});
+
+  router.get("/location/:location", async (req, res) => {
+    const location = await addBuilding.find({ location: req.params.location });
+    if (!location) return res.status(404).send("The distination not found.");
+    res.send(location);
+  });
+/* 
 router.put("/:id", async (req, res) => {
   const genre = await Covoiturage.findByIdAndUpdate(req.params.id, {
     depart: req.body.depart,
