@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const app = express();
 const addBuilding = require("../models/addBuilding");
-const multer = require("multer")
+const multer = require("multer");
 // const checkAuth = require("../middleware/check_auth");
 
 router.get("/", async (req, res) => {
@@ -11,61 +11,60 @@ router.get("/", async (req, res) => {
 });
 router.get("/:id", async (req, res) => {
   const addBuild = await addBuilding.findById(req.params.id);
-  if (!addBuild)
-      {return res.status(404).send("The genre with the given ID was not found.");}
-      
-      
-      res.send(addBuild);
+  if (!addBuild) {
+    return res.status(404).send("The genre with the given ID was not found.");
+  }
+
+  res.send(addBuild);
 });
- router.get("/owner/:id", async (req, res) => {
+router.get("/owner/:id", async (req, res) => {
   const addBuild = await addBuilding.find({ idUserPoster: req.params.id });
   res.send(addBuild);
-}); 
+});
 
 var storage = multer.diskStorage({
-    destination: "uploads",
-    filename: function (req, file, cb) {
-      cb(null,file.originalname)
-    },
-  });
+  destination: "uploads",
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
 const upload = multer({ storage: storage });
 
 router.post("/postBuilding", upload.array("image[]"), async (req, res) => {
-  console.log(req.file);
+  console.log(req.files);
   let addbuild = new addBuilding({
     title: req.body.title,
     location: req.body.location,
     description: req.body.description,
     date: req.body.date,
     time: req.body.time,
-    
   });
-  if(req.files){
-      let path= []
-      req.files.forEach((files)=>{
-          path.push(files.filename)
-          console.log(files)
-      })
-      
-      addbuild.image = path
+  if (req.files) {
+    let path = [];
+    req.files.forEach((files) => {
+      path.push(files.filename);
+    });
+    console.log("path is " + path);
+
+    addbuild.image = path;
   }
   await addbuild.save();
   res.send(addbuild);
 });
 router.delete("/:id", async (req, res) => {
-    const addbuild = await addBuilding.findByIdAndRemove(req.params.id);
-  
-    if (!addbuild)
-      return res.status(404).send("The genre with the given ID was not found.");
-    
-    res.send(addbuild);
-  });
+  const addbuild = await addBuilding.findByIdAndRemove(req.params.id);
 
-  router.get("/location/:location", async (req, res) => {
-    const location = await addBuilding.find({ location: req.params.location });
-    if (!location) return res.status(404).send("The distination not found.");
-    res.send(location);
-  });
+  if (!addbuild)
+    return res.status(404).send("The genre with the given ID was not found.");
+
+  res.send(addbuild);
+});
+
+router.get("/location/:location", async (req, res) => {
+  const location = await addBuilding.find({ location: req.params.location });
+  if (!location) return res.status(404).send("The distination not found.");
+  res.send(location);
+});
 /* 
 router.put("/:id", async (req, res) => {
   const genre = await Covoiturage.findByIdAndUpdate(req.params.id, {
