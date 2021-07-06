@@ -28,10 +28,10 @@ var storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage }).array("image");
 
-router.post("/postBuilding", upload.array("image[]"), async (req, res) => {
-  console.log(req.files);
+router.post("/postBuilding", upload, async (req, res) => {
+  console.log(req.file);
   let addbuild = new addBuilding({
     title: req.body.title,
     location: req.body.location,
