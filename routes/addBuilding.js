@@ -23,7 +23,7 @@ router.get("/owner/:id", async (req, res) => {
 });
 
 var storage = multer.diskStorage({
-  destination: "uploads",
+  destination: "../../teambuilding/upload",
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
